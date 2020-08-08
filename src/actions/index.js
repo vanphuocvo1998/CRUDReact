@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const GetAllProductRequest = ()=>{
     return (dispatch)=>{
-        return axios.get('https://localhost:44387/api/Products')
+        return axios.get('https://localhost:44348/api/Books/GetAll')
         .then(res=>{
             dispatch(GetAllProduct(res.data));
         })
@@ -23,7 +23,7 @@ export const GetAllProduct = (products)=>{
 // gửi request lên server
 export const DeleteProductRequest = (id)=>{
     return (dispatch) =>{
-        return  axios.delete(`https://localhost:44387/api/Products/${id}`).then(res=>{
+        return  axios.delete(`https://localhost:44348/api/Books/Delete/${id}`).then(res=>{
             if(res.status===200)
             {
                  dispatch(DeleteProduct(id));
@@ -43,7 +43,7 @@ export const DeleteProduct = (id)=>{
 
 export const AddProductRequest = (product)=>{
     return (dispatch)=> {
-        return  axios.post('https://localhost:44387/api/Products/add', product)
+        return  axios.post('https://localhost:44348/api/Books/Add', product)
         .then(res=>{
             dispatch(AddProduct(res.data));
         })
@@ -62,7 +62,7 @@ export const AddProduct = (product)=>{
 
 export const GetDetailProductRequest = (id) =>{
     return (dispatch)=>{
-        return  axios.get(`https://localhost:44387/api/Products/${id}`)
+        return  axios.get(`https://localhost:44348/api/Books/GetById/${id}`)
           .then(res=>{
               dispatch(GetDetailProduct(res.data));
           })
@@ -81,7 +81,7 @@ export const GetDetailProduct = (product)=>{
 
 export const UpdateProductRequest = (id,product) =>{
     return dispatch =>{
-        return  axios.put(`https://localhost:44387/api/Products/${id}`, product)
+        return  axios.put(`https://localhost:44348/api/Books/Edit/${id}`, product)
         .then(res=>{
             dispatch(UpdateProduct(res.data));
         })

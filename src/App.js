@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import Menu from "./components/Menu/Menu";
 import routes from "./route";
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import { Switch, Route, BrowserRouter as Router , Link} from 'react-router-dom';
 class App extends Component {
 
   ShowContent = (route)=>{
@@ -19,6 +19,8 @@ class App extends Component {
   }
 
   render(){
+   
+  
     return (
       <Router>
           <div>
@@ -33,7 +35,10 @@ class App extends Component {
       </div>
       
       </Router>
-    )
+    );
+  
+
+      
   }
 }
 

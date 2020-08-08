@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 
 //callapi
-import callapi from "./../../utils/CallApi";
+
 import { Link } from 'react-router-dom';
-import axios from "axios"
+
 
 //action
 import {AddProductRequest, GetDetailProductRequest, UpdateProductRequest} from "./../../actions/index";
@@ -15,9 +15,13 @@ class ProductAction extends Component {
     super(props);
     this.state={
       id: "",
-      txtName: "",
-      txtPrice: "",
-      chkbStatus: ""
+      nameBook: "",
+      img:"",
+      content:"",
+      price: "",
+      sale: "",
+      status:"",
+      deleted:""
     }
   }
   componentDidMount()
@@ -37,16 +41,33 @@ class ProductAction extends Component {
       var {_itemEditting} = nextProps;
       this.setState({
         id: _itemEditting.id,
-        txtName: _itemEditting.name,
-        txtPrice: _itemEditting.price,
-        chkbStatus: _itemEditting.status
+        nameBook: _itemEditting.nameBook,
+        img: _itemEditting.img,
+        content: _itemEditting.content,
+        price: _itemEditting.price,
+        sale: _itemEditting.sale,
+        status: _itemEditting.status,
+        deleted: _itemEditting.deleted
       });
     }
   }
   onChange =(e)=>{
     var target = e.target;
     var name = target.name;
-    var value = target.type=="checkbox" ? target.checked : target.value;
+   // var value = target.type=="checkbox" ? target.checked : target.value;
+   var value="";
+   if(target.type==="checkbox")
+    {
+      value=target.checked;
+    }
+    else if(target.type==="file")
+    {
+      value=target.files[0].name;
+    }
+    else
+    {
+      value=  target.value;
+    }
     this.setState({
       [name]: value
     });
@@ -56,16 +77,20 @@ class ProductAction extends Component {
   onSave =(e)=>{
     
     e.preventDefault();
-      var {txtName, txtPrice, chkbStatus,id} = this.state;
+    var {id,nameBook, img, content, price, sale, deleted, status} = this.state;
       var {history} = this.props;
-      console.log(txtName + "-" + txtPrice + "-" +chkbStatus);
+      console.log(nameBook + "-" + img + "-" +content+ "-" + price + "-" +sale+ "-" + deleted + "-" +status);
       if(id) //update
       {
          
           var product = new FormData();
-          product.set('name',txtName);
-          product.set('price',txtPrice);
-          product.set('status',chkbStatus===true?"true": "false");
+          product.set('nameBook',nameBook);
+          product.set('img',img);
+          product.set('content',content);
+          product.set('price',price);
+          product.set('sale',sale);
+          product.set('status',status===true?"true": "false");
+          product.set('deleted',deleted===true?"true": "false");
          this.props._UpdateProduct(id,product);
          console.log("update sucess");
          history.goBack();
@@ -73,26 +98,53 @@ class ProductAction extends Component {
       }
       else //insert
       {
-        var product = new FormData();
-        product.set('name',txtName);
-        product.set('price',txtPrice);
-        product.set('status',chkbStatus===true?"true": "false");
-        this.props._AddProduct(product);
-        console.log("insert sucess");
-        history.goBack();
+        // var product = new FormData();
+        // product.set('name',txtName);
+        // product.set('price',txtPrice);
+        // product.set('status',chkbStatus===true?"true": "false");
+        // this.props._AddProduct(product);
+        // console.log("insert sucess");
+        // history.goBack();
       }
   }
   render(){
-    var {txtName, txtPrice, chkbStatus} = this.state;
+    var {nameBook, img, content, price, sale, deleted, status} = this.state;
     return (
          <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-             <form  onSubmit={this.onSave}>
+             <form  onSubmit={this.onSave} encType="multipart/form-data">
                 <div className="form-group">
                   <label>Tên Sản Phẩm:</label>
                   <input type="text" 
                   className="form-control"
-                   name="txtName"
-                     value={txtName}
+                   name="nameBook"
+                     value={nameBook}
+                     onChange={this.onChange}
+                   />
+                </div>
+                <div className="form-group">
+                  <label>Hình:</label>
+                  <input type="text" 
+                  className="form-control"
+                   name="img"
+                    value={img}
+                     onChange={this.onChange}
+                   />
+                </div>
+                <div className="form-group">
+                  <label>Chọn Hình:</label>
+                  <input type="file" 
+                  className="form-control"
+                   name="img"
+                  
+                     onChange={this.onChange}
+                   />
+                </div>
+                <div className="form-group">
+                  <label>Nội Dung:</label>
+                  <input type="text" 
+                  className="form-control"
+                   name="content"
+                     value={content}
                      onChange={this.onChange}
                    />
                 </div>
@@ -100,18 +152,38 @@ class ProductAction extends Component {
                   <label>Giá:</label>
                   <input type="number" 
                   className="form-control" 
-                  name="txtPrice"
-                  value={txtPrice}
+                  name="price"
+                  value={price}
+                  onChange={this.onChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Khuyến Mãi:</label>
+                  <input type="number" 
+                  className="form-control" 
+                  name="sale"
+                  value={sale}
                   onChange={this.onChange}
                   />
                 </div>
                 <div className="checkbox">
                   <label>
                       <input type="checkbox" 
-                      name="chkbStatus"
-                      value={chkbStatus}
+                      name="status"
+                      value={status}
                        onChange={this.onChange}
-                       checked={chkbStatus==="true"? true : false}
+                       checked={status==="true"? true : false}
+                      />
+                      còn hàng
+                  </label>
+                </div>
+                <div className="checkbox">
+                  <label>
+                      <input type="checkbox" 
+                      name="deleted"
+                      value={deleted}
+                       onChange={this.onChange}
+                       checked={deleted==="true"? true : false}
                       />
                       còn hàng
                   </label>

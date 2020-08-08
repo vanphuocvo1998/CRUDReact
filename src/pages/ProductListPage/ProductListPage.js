@@ -7,17 +7,13 @@ import {Link} from 'react-router-dom';
 //connect redux
 import {connect} from 'react-redux';
 import {GetAllProductRequest, DeleteProductRequest} from "./../../actions/index";
-//axios lấy data
-import axios from 'axios';
 
-//api
-import callapi from './../../utils/CallApi';
 class ProductListPage extends Component {
 
   constructor(props)
   {
     super(props);
-  }
+  } 
 
   componentDidMount(){
        this.props._GetAllProduct();

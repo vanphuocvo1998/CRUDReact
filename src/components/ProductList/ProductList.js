@@ -14,13 +14,17 @@ class ProductList extends Component {
                     <tr>
                       <th>STT</th>
                       <th>Mã</th>
+                      <th>Hình</th>
                       <th>Tên</th>
+                      <th>Nội Dung</th>
                       <th>Giá</th>
+                      <th>Sale</th>
                       <th>Trạng Thái</th>
+                      <th>Còn Bán</th>
                       <th>Hành Động</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody> 
                     {this.props.children}
                 </tbody>
               </table>
